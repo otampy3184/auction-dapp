@@ -7,7 +7,7 @@ import "./ERC721Basic.sol";
  * @dev See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md
  */
 
-//ERC721Tokenのenum用拡張機能
+//ERC721Tokenの列挙用拡張機能
 contract ERC721Enumrable is ERC721Basic {
     //供給量の全量を確認する
     function totalSupply() public view returns (uint256);
