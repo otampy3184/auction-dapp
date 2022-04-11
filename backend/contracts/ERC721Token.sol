@@ -114,7 +114,26 @@ contract ERC721Token is ERC721, ERC721Basic {
        allTokens.push(_tokenId);
     }
 
-    
+    //トークンをバーンする
+    function _burn(address _owner, uint256 _tokenId) internal {
+        super._burn(_owner, _tokenId);
+
+        //メタデータがあった場合は削除する
+        if (bytes(tokenURIs[_tokenId]).length != 0){
+            delete tokenURIs[_tokenId];
+        }
+
+        uint256 tokenIndex = allTokensIndex[_tokenId];
+        uint256 lastTokenindex;
+        uint256 lastToken = allTokens[lastTokenIndex];
+
+        allTokens = lastToken;
+        allTokens[lastTokenindex] = 0;
+
+        allTokens.length--;
+        allTokensIndex[_tokenId] = 0; 
+        allTokensIndex[lastToken] = tokenIndex;
+    }
 }
 
 
