@@ -1,4 +1,6 @@
-pragma solidity ^0.5.16;
+pragma solidity ^0.8.13;
+
+//SPDX-License-Identifier: UNLICENSED
 
 //ERC721のトークンレシーバインターフェース
 //operatorの引数は省略

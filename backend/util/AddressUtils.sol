@@ -1,11 +1,13 @@
-pragma solidity ^0.5.16
+pragma solidity ^0.8.13;
+
+//SPDX-License-Identifier: UNLICENSED
 
 /**
  * @title Address確認用のUtilのコピペ
  */
 
  library AddressUtils {
-     function isContract(address addr) internal pure returns(bool) {
+     function isContract(address addr) internal view returns(bool) {
         uint256 size;
         // XXX Currently there is no better way to check if there is a contract in an address
         // than to check the size of the code at that address.

@@ -1,4 +1,6 @@
-pragma solidity ^0.5.16;
+pragma solidity ^0.8.13;
+
+//SPDX-License-Identifier: UNLICENSED
 
 import "./ERC721Basic.sol";
 
@@ -8,13 +10,13 @@ import "./ERC721Basic.sol";
  */
 
 //ERC721Tokenの列挙用拡張機能
-contract ERC721Enumrable is ERC721Basic {
+abstract contract ERC721Enumrable is ERC721Basic {
     //供給量の全量を確認する
-    function totalSupply() public view returns (uint256);
+    function totalSupply()virtual public view returns (uint256);
     //特定owner所持のトークンをインデックス順に抽出
-    function tokenOfOwnerByIndex(address _owner, uint256 _index) public view returns (uint256 _tokenId);
+    function tokenOfOwnerByIndex(address _owner, uint256 _index)virtual public view returns (uint256 _tokenId);
     //全トークンをインデックス順に抽出
-    function tokenByIndex(uint256 _index) public view returns (uint256);
+    function tokenByIndex(uint256 _index)virtual public view returns (uint256);
 }
 
 /**
@@ -23,13 +25,13 @@ contract ERC721Enumrable is ERC721Basic {
  */
 
  //ERC721でMetadataを規定する拡張機能
-contract ERC721Metadata is ERC721Basic {
+abstract contract ERC721Metadata is ERC721Basic {
     //Nameデータを返す
-    function name() public view returns (string memory _name);
+    function name()virtual public view returns (string memory _name);
     //Symbolデータを返す
-    function symbol() public view returns (string memory _symbol);
+    function symbol()virtual public view returns (string memory _symbol);
     //TokenURIを返す
-    function tokenURI(uint256 _tokenid) public view returns (string memory);
+    function tokenURI(uint256 _tokenid)virtual public view returns (string memory);
 }
 
 /**
@@ -38,5 +40,5 @@ contract ERC721Metadata is ERC721Basic {
  */
 
 //拡張機能も合わせたInterface
-contract ERC721 is ERC721Basic, ERC721Enumrable, ERC721Metadata {
+abstract contract ERC721 is ERC721Basic, ERC721Enumrable, ERC721Metadata {
 }

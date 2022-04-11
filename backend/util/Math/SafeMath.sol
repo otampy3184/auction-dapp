@@ -1,4 +1,6 @@
-pragma solidity ^0.5.16;
+pragma solidity ^0.8.13;
+
+//SPDX-License-Identifier: UNLICENSED
 
 //Math
 //計算失敗の場合にErrorを返すので安心
@@ -29,7 +31,7 @@ library SafeMath {
 
     //tashizan
     //assure for not overfloating
-    function add() {
+    function add(uint256 a, uint256 b) internal pure returns(uint256) {
         uint256 c = a + b;
         assert(c >= a);
         return c;
