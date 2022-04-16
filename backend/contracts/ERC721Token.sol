@@ -14,7 +14,7 @@ import "./ERC721BasicToken.sol";
  */
 
  //ERC721トークンの全体！！
-contract ERC721Token is ERC721, ERC721Basic {
+contract ERC721Token is ERC721, ERC721BasicToken {
     //Token name
     string internal name_;
 
