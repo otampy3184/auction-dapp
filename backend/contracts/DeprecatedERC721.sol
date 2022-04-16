@@ -11,8 +11,8 @@ import "./ERC721.sol";
  */
 
 //古い型で現在は使われていないが、過去のコントラクトとの整合性を保つために必要
-contract DeprecatedERC721Token is ERC721 {
-    function takeOwnership(uint256 _tokenId) public;
-    function transfer(address _to, uint256 _tokenId) public;
-    function tokenOf(address _owner) public view returns (uint256[] memory);
+abstract contract DeprecatedERC721Token is ERC721 {
+    function takeOwnership(uint256 _tokenId) public virtual;
+    function transfer(address _to, uint256 _tokenId) public virtual;
+    function tokenOf(address _owner) public virtual view returns (uint256[] memory);
 }
