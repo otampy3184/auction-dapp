@@ -14,7 +14,7 @@ import "./ERC721BasicToken.sol";
  */
 
  //ERC721トークンの全体！！
-contract ERC721Token is ERC721, ERC721BasicToken {
+abstract contract ERC721Token is ERC721, ERC721BasicToken {
     //Token name
     string internal name_;
 
@@ -40,40 +40,40 @@ contract ERC721Token is ERC721, ERC721BasicToken {
   * @dev Constructor function
   */
   //コンストラクタ
-  constructor(string memory _name, string memory _symbol) public {
-      name = _name;
-      symbol = _symbol; 
+  constructor(string memory _name, string memory _symbol) {
+      name_ = _name;
+      symbol_ = _symbol; 
   }
 
   //Tokenの名前取得
-  function name() public view returns (string memory) {
+  function name() public override view returns (string memory) {
       return name_;
   }
 
   //Tokenのシンボル取得
-  function symbol() public view returns (string memory) {
+  function symbol() public override view returns (string memory) {
       return symbol_;
   }
 
   //TokenのURI取得
-  function tokenURI(uint256 _tokenId) public view returns (string memory) {
-      require(existx(_tokenId));
+  function tokenURI(uint256 _tokenId) public override view returns (string memory) {
+      require(exists(_tokenId));
       return tokenURIs[_tokenId];
   }
 
   //リクエスト元のOwnerが所持するIndexから全てのTokenIDを取得する
-  function tokenOfOwnerByIndex(address _onwer, uint256 _index) {
-      require(_index < balanceOf(owner));
+  function tokenOfOwnerByIndex(address _owner, uint256 _index) public override view returns(uint256) {
+      require(_index < balanceOf(_owner)); 
       return ownedTokens[_owner][_index];
   }
 
   //Contractに入っている全Tokenを取得する
-  function totalSupply() public view returns (uint256) {
+  function totalSupply() public override view returns (uint256) {
       return allTokens.length;
   }
 
   //与えられたIndex値からContractが所有している全トークンを取得する
-  function tokenByIndex(uint256 _index) public view returns (uint256) {
+  function tokenByIndex(uint256 _index) public  override view returns (uint256) {
       require(_index < totalSupply());
       return allTokens[_index];
   }
@@ -86,7 +86,8 @@ contract ERC721Token is ERC721, ERC721BasicToken {
 
   //指定のアドレスに対してトークンIDを付与する
   function addTokenTo(address _to, uint256 _tokenId) internal {
-      super.addTokenTo(_to, _tokenId);
+      //super.addTokenTo(_to, _tokenId);
+      addTokenTo(_to, _tokenId);
       uint256 length = ownedTokens[_to].length;
       ownedTokens[_to].push(_tokenId);
       ownedTokenIndex[_tokenId] = length;
@@ -94,7 +95,8 @@ contract ERC721Token is ERC721, ERC721BasicToken {
 
   //指定のアドレスに付与されたTokenIDを削除する
   function removeTokenFrom(address _from, uint256 _tokenId) internal {
-      super.removeTokenFrom(_from, _tokenId);
+      //super.removeTokenFrom(_from, _tokenId);
+      removeTokenFrom(_from, _tokenId);
 
       uint256 tokenIndex = ownedTokenIndex[_tokenId];
       uint256 lastTokenIndex = ownedTokens[_from].length.sub(1);
@@ -126,11 +128,11 @@ contract ERC721Token is ERC721, ERC721BasicToken {
         }
 
         uint256 tokenIndex = allTokensIndex[_tokenId];
-        uint256 lastTokenindex;
+        uint256 lastTokenIndex;
         uint256 lastToken = allTokens[lastTokenIndex];
 
         allTokens = lastToken;
-        allTokens[lastTokenindex] = 0;
+        allTokens[lastTokenIndex] = 0;
 
         allTokens.length--;
         allTokensIndex[_tokenId] = 0; 
