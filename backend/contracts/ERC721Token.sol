@@ -94,21 +94,24 @@ abstract contract ERC721Token is ERC721, ERC721BasicToken {
   }
 
   //指定のアドレスに付与されたTokenIDを削除する
-  function removeTokenFrom(address _from, uint256 _tokenId) internal {
-      //super.removeTokenFrom(_from, _tokenId);
-      removeTokenFrom(_from, _tokenId);
+  //OpenZeppelinによると<https://github.com/OpenZeppelin/openzeppelin-contracts/commit/12533bcb2b69a680d4cd0562de3954d041f1e6d5>のコミットで消された模様
+  //詳しくはコメント参照
+  //   
+  //   function removeTokenFrom(address _from, uint256 _tokenId) internal {
+  //       //super.removeTokenFrom(_from, _tokenId);
+  //       removeTokenFrom(_from, _tokenId);
 
-      uint256 tokenIndex = ownedTokenIndex[_tokenId];
-      uint256 lastTokenIndex = ownedTokens[_from].length.sub(1);
-      uint256 lastToken = ownedTokens[_from][lastTokenIndex];
+  //       uint256 tokenIndex = ownedTokenIndex[_tokenId];
+  //       uint256 lastTokenIndex = ownedTokens[_from].length - 1;
+  //       uint256 lastToken = ownedTokens[_from][lastTokenIndex];
 
-      ownedTokens[_from][tokenIndex] = lastToken;
-      ownedTokens[_from][lastTokenIndex] = 0;
-
-      ownedTokens[_from].length--;
-      ownedTokenIndex[_tokenId] = 0;
-      ownedTokenIndex[lastToken] =tokenIndex;
-   }
+  //       ownedTokens[_from][tokenIndex] = lastToken;
+  //       ownedTokens[_from][lastTokenIndex] = 0;
+ 
+  //       ownedTokens[_from].length--;
+  //       ownedTokenIndex[_tokenId] = 0;
+  //       ownedTokenIndex[lastToken] =tokenIndex;
+  //    }
 
    //新しいトークンをミントする
    function _mint(address _to, uint256 _tokenId) internal{
@@ -117,6 +120,7 @@ abstract contract ERC721Token is ERC721, ERC721BasicToken {
        allTokensIndex[_tokenId] = allTokens.length;
        allTokens.push(_tokenId);
     }
+    
 
     //トークンをバーンする
     function _burn(address _owner, uint256 _tokenId) internal {
