@@ -61,6 +61,13 @@ abstract contract ERC721Token is ERC721, ERC721BasicToken {
         return symbol_;
     }
 
+    //tokenのOwnerを取得
+    //TODO: ERC721BasicTokenからの継承に問題あり
+    // function ownerOf(uint256 _tokenId) public view virtual override returns (address) {
+    //     address owner = _owners[_tokenId];
+
+    // }
+
     //TokenのURI取得
     function tokenURI(uint256 _tokenId)
         public
@@ -171,23 +178,29 @@ abstract contract ERC721Token is ERC721, ERC721BasicToken {
     ) internal virtual {}
 
     //トークンをバーンする
-    function _burn(address _owner, uint256 _tokenId) internal {
-        super._burn(_owner, _tokenId);
+    //最新のopenzeppelinでは実装が変わっている模様
+    // function _burn(address _owner, uint256 _tokenId) internal {
+    //     super._burn(_owner, _tokenId);
 
-        //メタデータがあった場合は削除する
-        if (bytes(tokenURIs[_tokenId]).length != 0) {
-            delete tokenURIs[_tokenId];
-        }
+    //     //メタデータがあった場合は削除する
+    //     if (bytes(tokenURIs[_tokenId]).length != 0) {
+    //         delete tokenURIs[_tokenId];
+    //     }
 
-        uint256 tokenIndex = allTokensIndex[_tokenId];
-        uint256 lastTokenIndex;
-        uint256 lastToken = allTokens[lastTokenIndex];
+    //     uint256 tokenIndex = allTokensIndex[_tokenId];
+    //     uint256 lastTokenIndex;
+    //     uint256 lastToken = allTokens[lastTokenIndex];
 
-        allTokens = lastToken;
-        allTokens[lastTokenIndex] = 0;
+    //     allTokens = lastToken;
+    //     allTokens[lastTokenIndex] = 0;
 
-        allTokens.length--;
-        allTokensIndex[_tokenId] = 0;
-        allTokensIndex[lastToken] = tokenIndex;
-    }
+    //     allTokens.length--;
+    //     allTokensIndex[_tokenId] = 0;
+    //     allTokensIndex[lastToken] = tokenIndex;
+    // }
+
+    //TODO: ownerOfが使えない
+    // function _burn(uint256 tokenId) internal virtual {
+    //     address owner = ERC721.ownerOf(tokenId);
+    // }
 }

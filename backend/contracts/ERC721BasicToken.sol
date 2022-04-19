@@ -57,16 +57,17 @@ abstract contract ERC721BasicToken is ERC721Basic {
         emit Approval(ownerOf(tokenId), to, tokenId);
     }
 
-    function approve(address to, uint256 tokenId) public virtual override {
-        address owner = ownerOf(tokenId);
-        require(to != owner, "ERC721: approval to current owner");
+    // TODO: Overriding function changes state mutability from "view" to "nonpayable".
+    // function approve(address to, uint256 tokenId) public virtual override {
+    //     address owner = ownerOf(tokenId);
+    //     require(to != owner, "ERC721: approval to current owner");
 
-        require(
-            msg.sender == owner || isApprovedForAll(owner, msg.sender),
-            "ERC721: approve caller is not owner nor approved for all"
-        );
+    //     require(
+    //         msg.sender == owner || isApprovedForAll(owner, msg.sender),
+    //         "ERC721: approve caller is not owner nor approved for all"
+    //     );
 
-        _approve(to, tokenId);
-    }
+    //     _approve(to, tokenId);
+    //}
 }
 
